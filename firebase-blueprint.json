@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "App user profile and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "purpose": { "type": "string", "enum": ["creator", "business", "gamer", "student"] },
+        "plan": { "type": "string", "enum": ["free", "premium"] },
+        "dailyGenerations": { "type": "number" },
+        "lastGenerationDate": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "plan"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "AI generated content project",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["social", "product", "gaming", "avatar"] },
+        "title": { "type": "string" },
+        "prompt": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "metadata": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "folderId": { "type": "string" }
+      },
+      "required": ["userId", "type", "imageUrl", "createdAt"]
+    },
+    "Template": {
+      "title": "Template",
+      "description": "Design templates managed by admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string" },
+        "title": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "config": { "type": "object" },
+        "isPremium": { "type": "boolean" }
+      },
+      "required": ["category", "title", "thumbnailUrl"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "User projects"
+    },
+    "/templates/{templateId}": {
+      "schema": "Template",
+      "description": "Global templates"
+    }
+  }
+}
